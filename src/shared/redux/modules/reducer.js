@@ -17,6 +17,7 @@ import searchList, { type State as SearchListstate } from "./searchList";
 import style, { type State as StyleState } from "./style";
 import hackerNews, { type State as HackerNewsState } from "./hackerNews";
 import uploadSample, { type State as UploadSampleState } from "./uploadSample";
+import hello, { type State as Hello } from "./hello";
 
 export type State = {
   app: {
@@ -34,6 +35,7 @@ export type State = {
     searchList: SearchListstate,
     style: StyleState,
     hackerNews: HackerNewsState,
+    hello: Hello,
   },
   // libraries
   form: *,
@@ -59,6 +61,7 @@ export default combineReducers({
       searchList,
       style,
       hackerNews,
+      hello,
     }),
   ),
   form: formReducer,
