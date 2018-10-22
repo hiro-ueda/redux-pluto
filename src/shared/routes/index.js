@@ -13,6 +13,7 @@ import {
   Main,
   NotFound,
   DefaultLayout,
+  Hello,
 } from "./main";
 
 // chunked components
@@ -53,6 +54,8 @@ export default function getRoutes(store: $FIXME) {
           <Route path="uploadsample" getComponent={loadUploadSample} />
 
           <Route path="hn" getComponent={loadHackerNews} />
+
+          <Route path="hello" component={Hello} />
 
           <Route path="login" getComponent={loadLogin} />
           <Route path="logout" onEnter={bindOnEnter(doLogout)} />
