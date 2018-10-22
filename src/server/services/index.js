@@ -9,3 +9,4 @@ export { default as HairLengthMaster } from "./HairLengthMaster";
 export { default as MenuContentMaster } from "./MenuContentMaster";
 export { default as Search } from "./Search";
 export { default as HackerNews } from "./HackerNews";
+export { default as Hello } from "./Hello";

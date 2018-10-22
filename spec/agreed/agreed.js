@@ -10,4 +10,5 @@ module.exports = [
   "./masters/getHairColorMaster.js",
   "./masters/getAreaMaster.js",
   "./masters/getMenuContentsMaster.js",
+  "./hello/getComments.js",
 ];
