@@ -1,7 +1,7 @@
 /* @flow */
 import { createAction, handleActions } from "redux-actions";
 import { steps } from "redux-effects-steps";
-import { fetchrRead } from "redux-effects-fetchr";
+import { fetchrRead, fetchrCreate } from "redux-effects-fetchr";
 // リクエスト送信、 成功、 失敗の Action Type を作成する util
 import { createAsyncActionTypes } from "./utils";
 
@@ -18,6 +18,12 @@ const [
   HELLO_GET_COMMENTS_FAIL,
 ] = createAsyncActionTypes(`${HELLO}/get/comments`);
 
+const [
+  HELLO_POST_COMMENT_REQUEST,
+  HELLO_POST_COMMENT_SUCCESS,
+  HELLO_POST_COMMENT_FAIL,
+] = createAsyncActionTypes(`${HELLO}/post/comments`);
+
 /**
  * Action creators
  */
@@ -28,12 +34,24 @@ export const getCommentsRequest = createAction(HELLO_GET_COMMENTS_REQUEST);
 export const getCommentsSuccess = createAction(HELLO_GET_COMMENTS_SUCCESS);
 export const getCommentsFail = createAction(HELLO_GET_COMMENTS_FAIL);
 
+export const postCommentRequest = createAction(HELLO_POST_COMMENT_REQUEST);
+export const postCommentSuccess = createAction(HELLO_POST_COMMENT_SUCCESS);
+export const postCommentFail = createAction(HELLO_POST_COMMENT_FAIL);
+
 // component 側で呼び出す関数を定義
 export function getComments() {
   return steps(
     getCommentsRequest({ resource: "hello" }),
     ({ payload }) => fetchrRead(payload), // 先程作成した name が hello の service 内の read メソッドを呼び出す
     [getCommentsSuccess, getCommentsFail],
+  );
+}
+
+export function postComment(body: { text: string }) {
+  return steps(
+    postCommentRequest({ resource: "hello", body }),
+    ({ payload }) => fetchrCreate(payload),
+    [postCommentSuccess, postCommentFail],
   );
 }
 
@@ -85,6 +103,35 @@ export default handleActions(
     },
     // request が失敗した際には、受け取った error を state に追加する
     [HELLO_GET_COMMENTS_FAIL]: (state, action) => {
+      const { error } = action;
+      return {
+        ...state,
+        error,
+        loading: false,
+        loaded: false,
+      };
+    },
+    [HELLO_POST_COMMENT_REQUEST]: state => ({
+      ...state,
+      loading: true,
+      loaded: false,
+    }),
+    [HELLO_POST_COMMENT_SUCCESS]: (state, action) => {
+      const {
+        payload: {
+          data: {
+            results: { id, text },
+          },
+        },
+      } = action;
+      return {
+        ...state,
+        comments: [...state.comments, { id, text }],
+        loading: false,
+        loaded: true,
+      };
+    },
+    [HELLO_POST_COMMENT_FAIL]: (state, action) => {
       const { error } = action;
       return {
         ...state,

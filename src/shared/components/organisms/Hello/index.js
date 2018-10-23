@@ -1,7 +1,12 @@
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { asyncLoader } from "redux-async-loader";
-import { changeVisibility, getComments } from "../../../redux/modules/hello";
+import { reduxForm } from "redux-form";
+import {
+  changeVisibility,
+  getComments,
+  postComment,
+} from "../../../redux/modules/hello";
 import Hello from "./Hello";
 
 export default compose(
@@ -15,4 +20,10 @@ export default compose(
       onChangeVisibility: () => dispatch(changeVisibility()),
     }),
   ),
+  reduxForm({
+    form: "hello",
+    onSubmit(values, dispatch) {
+      dispatch(postComment(values));
+    },
+  }),
 )(Hello);

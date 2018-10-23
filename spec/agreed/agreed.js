@@ -11,4 +11,5 @@ module.exports = [
   "./masters/getAreaMaster.js",
   "./masters/getMenuContentsMaster.js",
   "./hello/getComments.js",
+  "./hello/postComment.js",
 ];

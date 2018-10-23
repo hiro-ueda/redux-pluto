@@ -1,5 +1,5 @@
 import { create as createAxios } from "axios";
-import { read } from "./utils";
+import { read, create } from "./utils";
 
 export default class Hello {
   constructor(config) {
@@ -11,5 +11,9 @@ export default class Hello {
 
   read(req, resource, params = {}, config) {
     return read(this.axios, this.name, this.pathname, params, {});
+  }
+
+  create(req, resource, params, body, config) {
+    return create(this.axios, this.name, this.pathname, body, params, {});
   }
 }
