@@ -66,7 +66,7 @@ export type State = {
   loaded: boolean,
 };
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   isVisible: true,
   comments: [], // INITIAL_STATE に comments を追加
   loading: false,
